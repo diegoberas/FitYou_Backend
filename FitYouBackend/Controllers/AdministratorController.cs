@@ -16,15 +16,16 @@ namespace FitYouBackend.Controllers
     {
         private FityouContext db = new FityouContext();
 
-        // GET: api/Administrator
-        [Route("api/Administrator/all")]
+        // GET: api/getAdministrators
+        [Route("api/getAdministrators")]
         [HttpGet]
         public IEnumerable<Administrator> GetAdministrators()
         {
             return db.Administrators.ToList();
         }
 
-        // GET: api/Administrator/5
+        // GET: api/getAdministratorById/5
+        [Route("api/getAdministratorById/{id}")]
         [ResponseType(typeof(Administrator))]
         [HttpGet]
         public IHttpActionResult GetAdministrator(int id)
@@ -38,10 +39,11 @@ namespace FitYouBackend.Controllers
             return Ok(administrator);
         }
 
-        // PUT: api/Administrator/5
+        // PUT: api/putAdministrator/5
         [ResponseType(typeof(void))]
+        [Route("api/putAdministrator/{id}")]
         [HttpPut]
-        public IHttpActionResult PutAdministrator(int id, [FromUri] Administrator administrator)
+        public IHttpActionResult PutAdministrator(int id, [FromBody] Administrator administrator)
         {
             if (!ModelState.IsValid)
             {
@@ -71,11 +73,13 @@ namespace FitYouBackend.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok("Administrator updated successfully.");
+            //return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Administrator
+        // POST: api/postAdministrator
         [ResponseType(typeof(Administrator))]
+        [Route("api/postAdministrator")]
         [HttpPost]
         public IHttpActionResult PostAdministrator([FromBody] Administrator administrator)
         {
@@ -87,11 +91,13 @@ namespace FitYouBackend.Controllers
             db.Administrators.Add(administrator);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = administrator.Id }, administrator);
+            return Ok("Administrator created successfully.");
+            //return CreatedAtRoute("api/postAdministrator", new { id = administrator.Id }, administrator);
         }
 
-        // DELETE: api/Administrator/5
+        // DELETE: api/deleteAdministrator/5
         [ResponseType(typeof(Administrator))]
+        [Route("api/deleteAdministrator/{id}")]
         [HttpDelete]
         public IHttpActionResult DeleteAdministrator(int id)
         {
@@ -103,8 +109,8 @@ namespace FitYouBackend.Controllers
 
             db.Administrators.Remove(administrator);
             db.SaveChanges();
-
-            return Ok(administrator);
+            
+            return Ok("Administrator deleted successfully.");
         }
 
         protected override void Dispose(bool disposing)
