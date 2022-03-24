@@ -16,14 +16,18 @@ namespace FitYouBackend.Controllers
     {
         private FityouContext db = new FityouContext();
 
-        // GET: api/CompanyDetail
-        public IQueryable<CompanyDetail> GetCompanyDetails()
+        // GET: api/getCompanyDetails
+        [Route("api/getCompanyDetails")]
+        [HttpGet]
+        public IEnumerable<CompanyDetail> GetCompanyDetails()
         {
-            return db.CompanyDetails;
+            return db.CompanyDetails.ToList();
         }
 
-        // GET: api/CompanyDetail/5
+        // GET: api/getCompanyDetailById/5
         [ResponseType(typeof(CompanyDetail))]
+        [Route("api/getCompanyDetailById/{id}")]
+        [HttpGet]
         public IHttpActionResult GetCompanyDetail(int id)
         {
             CompanyDetail companyDetail = db.CompanyDetails.Find(id);
@@ -35,9 +39,11 @@ namespace FitYouBackend.Controllers
             return Ok(companyDetail);
         }
 
-        // PUT: api/CompanyDetail/5
+        // PUT: api/putCompanyDetailById/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCompanyDetail(int id, CompanyDetail companyDetail)
+        [Route("api/putCompanyDetailById/{id}")]
+        [HttpPut]
+        public IHttpActionResult PutCompanyDetail(int id, [FromBody] CompanyDetail companyDetail)
         {
             if (!ModelState.IsValid)
             {
@@ -67,12 +73,14 @@ namespace FitYouBackend.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok("Company_Detail updated successfully.");
         }
 
-        // POST: api/CompanyDetail
+        // POST: api/postCompanyDetail
         [ResponseType(typeof(CompanyDetail))]
-        public IHttpActionResult PostCompanyDetail(CompanyDetail companyDetail)
+        [Route("api/postCompanyDetail")]
+        [HttpPost]
+        public IHttpActionResult PostCompanyDetail([FromBody] CompanyDetail companyDetail)
         {
             if (!ModelState.IsValid)
             {
@@ -82,11 +90,13 @@ namespace FitYouBackend.Controllers
             db.CompanyDetails.Add(companyDetail);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = companyDetail.Id }, companyDetail);
+            return Ok("Company_Detail created successfully.");
         }
 
-        // DELETE: api/CompanyDetail/5
+        // DELETE: api/deleteCompanyDetail/5
         [ResponseType(typeof(CompanyDetail))]
+        [Route("api/deleteCompanyDetail/{id}")]
+        [HttpDelete]
         public IHttpActionResult DeleteCompanyDetail(int id)
         {
             CompanyDetail companyDetail = db.CompanyDetails.Find(id);
@@ -98,7 +108,7 @@ namespace FitYouBackend.Controllers
             db.CompanyDetails.Remove(companyDetail);
             db.SaveChanges();
 
-            return Ok(companyDetail);
+            return Ok("Company_Detail deleted successfully.");
         }
 
         protected override void Dispose(bool disposing)

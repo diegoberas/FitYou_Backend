@@ -16,15 +16,17 @@ namespace FitYouBackend.Controllers
     {
         private FityouContext db = new FityouContext();
 
-        // GET: api/Company
+        // GET: api/getCompanies
+        [Route("api/getCompanies")]
         [HttpGet]
         public IEnumerable<Company> GetCompanies()
         {
             return db.Companies.ToList();
         }
 
-        // GET: api/Company/5
+        // GET: api/getCompanyById/5
         [ResponseType(typeof(Company))]
+        [Route("api/getCompanyById/{id}")]
         [HttpGet]
         public IHttpActionResult GetCompany(int id)
         {
@@ -37,10 +39,11 @@ namespace FitYouBackend.Controllers
             return Ok(company);
         }
 
-        // PUT: api/Company/5
+        // PUT: api/putCompany/5
         [ResponseType(typeof(void))]
+        [Route("api/putCompany/{id}")]
         [HttpPut]
-        public IHttpActionResult PutCompany(int id, [FromUri] Company company)
+        public IHttpActionResult PutCompany(int id, [FromBody] Company company)
         {
             if (!ModelState.IsValid)
             {
@@ -70,13 +73,14 @@ namespace FitYouBackend.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok("Company updated successfully.");
         }
 
-        // POST: api/Company
+        // POST: api/postCompany
         [ResponseType(typeof(Company))]
+        [Route("api/postCompany")]
         [HttpPost]
-        public IHttpActionResult PostCompany([FromUri] Company company)
+        public IHttpActionResult PostCompany([FromBody] Company company)
         {
             if (!ModelState.IsValid)
             {
@@ -86,11 +90,13 @@ namespace FitYouBackend.Controllers
             db.Companies.Add(company);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = company.Id }, company);
+            return Ok("Company created successfully.");
+            //return CreatedAtRoute("DefaultApi", new { id = company.Id }, company);
         }
 
-        // DELETE: api/Company/5
+        // DELETE: api/deleteCompany/5
         [ResponseType(typeof(Company))]
+        [Route("api/deleteCompany/{id}")]
         [HttpDelete]
         public IHttpActionResult DeleteCompany(int id)
         {
@@ -103,7 +109,7 @@ namespace FitYouBackend.Controllers
             db.Companies.Remove(company);
             db.SaveChanges();
 
-            return Ok(company);
+            return Ok("Company deleted successfully.");
         }
 
         protected override void Dispose(bool disposing)

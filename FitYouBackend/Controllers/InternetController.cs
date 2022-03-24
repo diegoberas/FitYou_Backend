@@ -16,14 +16,18 @@ namespace FitYouBackend.Controllers
     {
         private FityouContext db = new FityouContext();
 
-        // GET: api/Internet
-        public IQueryable<Internet> GetInternets()
+        // GET: api/GetInternets
+        [Route("api/GetInternets")]
+        [HttpGet]
+        public IEnumerable<Internet> GetInternets()
         {
-            return db.Internets;
+            return db.Internets.ToList();
         }
 
-        // GET: api/Internet/5
+        // GET: api/GetInternetById/5
         [ResponseType(typeof(Internet))]
+        [Route("api/GetInternetById/{id}")]
+        [HttpGet]
         public IHttpActionResult GetInternet(int id)
         {
             Internet internet = db.Internets.Find(id);
@@ -35,9 +39,11 @@ namespace FitYouBackend.Controllers
             return Ok(internet);
         }
 
-        // PUT: api/Internet/5
+        // PUT: api/PutInternet/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutInternet(int id, Internet internet)
+        [Route("api/PutInternet/{id}")]
+        [HttpPut]
+        public IHttpActionResult PutInternet(int id, [FromBody] Internet internet)
         {
             if (!ModelState.IsValid)
             {
@@ -67,12 +73,14 @@ namespace FitYouBackend.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok("Internet updated successfully.");
         }
 
-        // POST: api/Internet
+        // POST: api/postInternet
         [ResponseType(typeof(Internet))]
-        public IHttpActionResult PostInternet(Internet internet)
+        [Route("api/PostInternet")]
+        [HttpPost]
+        public IHttpActionResult PostInternet([FromBody] Internet internet)
         {
             if (!ModelState.IsValid)
             {
@@ -82,11 +90,13 @@ namespace FitYouBackend.Controllers
             db.Internets.Add(internet);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = internet.Id }, internet);
+            return Ok("Internet created successfully.");
         }
 
-        // DELETE: api/Internet/5
+        // DELETE: api/DeleteInternet/5
         [ResponseType(typeof(Internet))]
+        [Route("api/DeleteInternet/{id}")]
+        [HttpDelete]
         public IHttpActionResult DeleteInternet(int id)
         {
             Internet internet = db.Internets.Find(id);
@@ -98,7 +108,7 @@ namespace FitYouBackend.Controllers
             db.Internets.Remove(internet);
             db.SaveChanges();
 
-            return Ok(internet);
+            return Ok("Internet deleted successfully.");
         }
 
         protected override void Dispose(bool disposing)

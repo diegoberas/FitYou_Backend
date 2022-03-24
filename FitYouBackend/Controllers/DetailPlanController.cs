@@ -16,14 +16,18 @@ namespace FitYouBackend.Controllers
     {
         private FityouContext db = new FityouContext();
 
-        // GET: api/DetailPlan
-        public IQueryable<DetailPlan> GetDetailPlans()
+        // GET: api/getDetailPlans
+        [Route("api/getDetailPlans")]
+        [HttpGet]
+        public IEnumerable<DetailPlan> GetDetailPlans()
         {
-            return db.DetailPlans;
+            return db.DetailPlans.ToList();
         }
 
-        // GET: api/DetailPlan/5
+        // GET: api/getDetailPlanById/5
         [ResponseType(typeof(DetailPlan))]
+        [Route("api/getDetailPlanById/{id}")]
+        [HttpGet]
         public IHttpActionResult GetDetailPlan(int id)
         {
             DetailPlan detailPlan = db.DetailPlans.Find(id);
@@ -35,9 +39,11 @@ namespace FitYouBackend.Controllers
             return Ok(detailPlan);
         }
 
-        // PUT: api/DetailPlan/5
+        // PUT: api/putDetailPlan/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutDetailPlan(int id, DetailPlan detailPlan)
+        [Route("api/putDetailPlan/{id}")]
+        [HttpPut]
+        public IHttpActionResult PutDetailPlan(int id, [FromBody] DetailPlan detailPlan)
         {
             if (!ModelState.IsValid)
             {
@@ -67,12 +73,14 @@ namespace FitYouBackend.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok("DetailPlan updated successfully.");
         }
 
-        // POST: api/DetailPlan
+        // POST: api/postDetailPlan
         [ResponseType(typeof(DetailPlan))]
-        public IHttpActionResult PostDetailPlan(DetailPlan detailPlan)
+        [Route("api/postDetailPlan")]
+        [HttpPost]
+        public IHttpActionResult PostDetailPlan([FromBody] DetailPlan detailPlan)
         {
             if (!ModelState.IsValid)
             {
@@ -82,11 +90,13 @@ namespace FitYouBackend.Controllers
             db.DetailPlans.Add(detailPlan);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = detailPlan.Id }, detailPlan);
+            return Ok("DetailPlan created successfully.");
         }
 
-        // DELETE: api/DetailPlan/5
+        // DELETE: api/deleteDetailPlan/5
         [ResponseType(typeof(DetailPlan))]
+        [Route("api/deleteDetailPlan/{id}")]
+        [HttpDelete]
         public IHttpActionResult DeleteDetailPlan(int id)
         {
             DetailPlan detailPlan = db.DetailPlans.Find(id);
@@ -98,7 +108,7 @@ namespace FitYouBackend.Controllers
             db.DetailPlans.Remove(detailPlan);
             db.SaveChanges();
 
-            return Ok(detailPlan);
+            return Ok("DetailPlan deleted successfully.");
         }
 
         protected override void Dispose(bool disposing)
