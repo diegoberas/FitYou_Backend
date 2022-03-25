@@ -16,14 +16,18 @@ namespace FitYouBackend.Controllers
     {
         private FityouContext db = new FityouContext();
 
-        // GET: api/Telecable
-        public IQueryable<Telecable> GetTelecables()
+        // GET: api/GetTelecables
+        [Route("api/GetTelecables")]
+        [HttpGet]
+        public IEnumerable<Telecable> GetTelecables()
         {
-            return db.Telecables;
+            return db.Telecables.ToList();
         }
 
-        // GET: api/Telecable/5
+        // GET: api/GetTelecableById/5
         [ResponseType(typeof(Telecable))]
+        [Route("api/GetTelecableById/{id}")]
+        [HttpGet]
         public IHttpActionResult GetTelecable(int id)
         {
             Telecable telecable = db.Telecables.Find(id);
@@ -35,9 +39,11 @@ namespace FitYouBackend.Controllers
             return Ok(telecable);
         }
 
-        // PUT: api/Telecable/5
+        // PUT: api/PutTelecable/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutTelecable(int id, Telecable telecable)
+        [Route("api/PutTelecable/{id}")]
+        [HttpPut]
+        public IHttpActionResult PutTelecable(int id,[FromBody] Telecable telecable)
         {
             if (!ModelState.IsValid)
             {
@@ -67,12 +73,14 @@ namespace FitYouBackend.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok("Telecable updated successfully.");
         }
 
-        // POST: api/Telecable
+        // POST: api/PostTelecable
         [ResponseType(typeof(Telecable))]
-        public IHttpActionResult PostTelecable(Telecable telecable)
+        [Route("api/PostTelecable")]
+        [HttpPost]
+        public IHttpActionResult PostTelecable([FromBody]Telecable telecable)
         {
             if (!ModelState.IsValid)
             {
@@ -82,11 +90,13 @@ namespace FitYouBackend.Controllers
             db.Telecables.Add(telecable);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = telecable.Id }, telecable);
+            return Ok("Telecable created successfully.");
         }
 
-        // DELETE: api/Telecable/5
+        // DELETE: api/DeleteTelecable/5
         [ResponseType(typeof(Telecable))]
+        [Route("api/DeleteTelecable/{id}")]
+        [HttpDelete]
         public IHttpActionResult DeleteTelecable(int id)
         {
             Telecable telecable = db.Telecables.Find(id);
@@ -98,7 +108,7 @@ namespace FitYouBackend.Controllers
             db.Telecables.Remove(telecable);
             db.SaveChanges();
 
-            return Ok(telecable);
+            return Ok("Telecable deleted successfully.");
         }
 
         protected override void Dispose(bool disposing)

@@ -16,14 +16,18 @@ namespace FitYouBackend.Controllers
     {
         private FityouContext db = new FityouContext();
 
-        // GET: api/Package
-        public IQueryable<Package> GetPackages()
+        // GET: api/GetPackages
+        [Route("api/GetPackages")]
+        [HttpGet]
+        public IEnumerable<Package> GetPackages()
         {
-            return db.Packages;
+            return db.Packages.ToList();
         }
 
-        // GET: api/Package/5
+        // GET: api/GetPackageById/5
         [ResponseType(typeof(Package))]
+        [Route("api/GetPackageById/{id}")]
+        [HttpGet]
         public IHttpActionResult GetPackage(int id)
         {
             Package package = db.Packages.Find(id);
@@ -35,9 +39,11 @@ namespace FitYouBackend.Controllers
             return Ok(package);
         }
 
-        // PUT: api/Package/5
+        // PUT: api/PutPackage/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutPackage(int id, Package package)
+        [Route("api/PutPackage/{id}")]
+        [HttpPut]
+        public IHttpActionResult PutPackage(int id,[FromBody] Package package)
         {
             if (!ModelState.IsValid)
             {
@@ -67,12 +73,14 @@ namespace FitYouBackend.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok("Package updated successfully.");
         }
 
-        // POST: api/Package
+        // POST: api/PostPackage
         [ResponseType(typeof(Package))]
-        public IHttpActionResult PostPackage(Package package)
+        [Route("api/PostPackage")]
+        [HttpPost]
+        public IHttpActionResult PostPackage([FromBody] Package package)
         {
             if (!ModelState.IsValid)
             {
@@ -82,11 +90,13 @@ namespace FitYouBackend.Controllers
             db.Packages.Add(package);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = package.Id }, package);
+            return Ok("Package created successfully.");
         }
 
-        // DELETE: api/Package/5
+        // DELETE: api/DeletePackage/5
         [ResponseType(typeof(Package))]
+        [Route("api/DeletePackage/{id}")]
+        [HttpDelete]
         public IHttpActionResult DeletePackage(int id)
         {
             Package package = db.Packages.Find(id);
@@ -98,7 +108,7 @@ namespace FitYouBackend.Controllers
             db.Packages.Remove(package);
             db.SaveChanges();
 
-            return Ok(package);
+            return Ok("Package deleted successfully.");
         }
 
         protected override void Dispose(bool disposing)

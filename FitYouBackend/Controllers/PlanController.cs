@@ -16,14 +16,18 @@ namespace FitYouBackend.Controllers
     {
         private FityouContext db = new FityouContext();
 
-        // GET: api/Plan
-        public IQueryable<Plan> GetPlans()
+        // GET: api/GetPlans
+        [Route("api/GetPlans")]
+        [HttpGet]
+        public IEnumerable<Plan> GetPlans()
         {
-            return db.Plans;
+            return db.Plans.ToList();
         }
 
-        // GET: api/Plan/5
+        // GET: api/GetPlanById/5
         [ResponseType(typeof(Plan))]
+        [Route("api/GetPlanById/{id}")]
+        [HttpGet]
         public IHttpActionResult GetPlan(int id)
         {
             Plan plan = db.Plans.Find(id);
@@ -35,9 +39,11 @@ namespace FitYouBackend.Controllers
             return Ok(plan);
         }
 
-        // PUT: api/Plan/5
+        // PUT: api/PutPlan/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutPlan(int id, Plan plan)
+        [Route("api/PutPlan/{id}")]
+        [HttpPut]
+        public IHttpActionResult PutPlan(int id,[FromBody] Plan plan)
         {
             if (!ModelState.IsValid)
             {
@@ -67,12 +73,14 @@ namespace FitYouBackend.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok("Plan updated successfully.");
         }
 
-        // POST: api/Plan
+        // POST: api/PostPlan
         [ResponseType(typeof(Plan))]
-        public IHttpActionResult PostPlan(Plan plan)
+        [Route("api/PostPlan")]
+        [HttpPost]
+        public IHttpActionResult PostPlan([FromBody] Plan plan)
         {
             if (!ModelState.IsValid)
             {
@@ -82,11 +90,13 @@ namespace FitYouBackend.Controllers
             db.Plans.Add(plan);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = plan.Id }, plan);
+            return Ok("Plan created successfully.");
         }
 
-        // DELETE: api/Plan/5
+        // DELETE: api/DeletePlan/5
         [ResponseType(typeof(Plan))]
+        [Route("api/DeletePlan/{id}")]
+        [HttpDelete]
         public IHttpActionResult DeletePlan(int id)
         {
             Plan plan = db.Plans.Find(id);
@@ -98,7 +108,7 @@ namespace FitYouBackend.Controllers
             db.Plans.Remove(plan);
             db.SaveChanges();
 
-            return Ok(plan);
+            return Ok("Plan deleted successfully.");
         }
 
         protected override void Dispose(bool disposing)

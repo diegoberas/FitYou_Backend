@@ -16,14 +16,18 @@ namespace FitYouBackend.Controllers
     {
         private FityouContext db = new FityouContext();
 
-        // GET: api/Telephone
-        public IQueryable<Telephone> GetTelephones()
+        // GET: api/GetTelephones
+        [Route("api/GetTelephones")]
+        [HttpGet]
+        public IEnumerable<Telephone> GetTelephones()
         {
-            return db.Telephones;
+            return db.Telephones.ToList();
         }
 
-        // GET: api/Telephone/5
+        // GET: api/GetTelephoneById/5
         [ResponseType(typeof(Telephone))]
+        [Route("api/GetTelephoneById/{id}")]
+        [HttpGet]
         public IHttpActionResult GetTelephone(int id)
         {
             Telephone telephone = db.Telephones.Find(id);
@@ -35,9 +39,11 @@ namespace FitYouBackend.Controllers
             return Ok(telephone);
         }
 
-        // PUT: api/Telephone/5
+        // PUT: api/PutTelephone/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutTelephone(int id, Telephone telephone)
+        [Route("api/PutTelephone/{id}")]
+        [HttpPut]
+        public IHttpActionResult PutTelephone(int id, [FromBody] Telephone telephone)
         {
             if (!ModelState.IsValid)
             {
@@ -67,12 +73,14 @@ namespace FitYouBackend.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok("Telephone updated successfully.");
         }
 
-        // POST: api/Telephone
+        // POST: api/PostTelephone
         [ResponseType(typeof(Telephone))]
-        public IHttpActionResult PostTelephone(Telephone telephone)
+        [Route("api/PostTelephone")]
+        [HttpPost]
+        public IHttpActionResult PostTelephone([FromBody]Telephone telephone)
         {
             if (!ModelState.IsValid)
             {
@@ -82,11 +90,13 @@ namespace FitYouBackend.Controllers
             db.Telephones.Add(telephone);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = telephone.Id }, telephone);
+            return Ok("Telephone created successfully.");
         }
 
-        // DELETE: api/Telephone/5
+        // DELETE: api/DeleteTelephone/5
         [ResponseType(typeof(Telephone))]
+        [Route("api/DeleteTelephone/{id}")]
+        [HttpDelete]
         public IHttpActionResult DeleteTelephone(int id)
         {
             Telephone telephone = db.Telephones.Find(id);
@@ -98,7 +108,7 @@ namespace FitYouBackend.Controllers
             db.Telephones.Remove(telephone);
             db.SaveChanges();
 
-            return Ok(telephone);
+            return Ok("Telephone deleted successfully.");
         }
 
         protected override void Dispose(bool disposing)
