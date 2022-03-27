@@ -178,6 +178,7 @@
     <Compile Include="EntityConfigurations\CompanyDetailConfiguration.cs" />
     <Compile Include="EntityConfigurations\DetailPlanConfiguration.cs" />
     <Compile Include="EntityConfigurations\InternetConfiguration.cs" />
+    <Compile Include="EntityConfigurations\OfficeConfiguration.cs" />
     <Compile Include="EntityConfigurations\PackageConfiguration.cs" />
     <Compile Include="EntityConfigurations\PlanConfiguration.cs" />
     <Compile Include="EntityConfigurations\TelecableConfiguration.cs" />
@@ -194,6 +195,10 @@
     <Compile Include="Migrations\202203221724339_FixRelationshipsBetweenDetailPlan.Designer.cs">
       <DependentUpon>202203221724339_FixRelationshipsBetweenDetailPlan.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203271344265_AddOfficeTable.cs" />
+    <Compile Include="Migrations\202203271344265_AddOfficeTable.Designer.cs">
+      <DependentUpon>202203271344265_AddOfficeTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Administrator.cs" />
     <Compile Include="Models\Company.cs" />
@@ -201,6 +206,7 @@
     <Compile Include="Models\DetailPlan.cs" />
     <Compile Include="Models\FityouContext.cs" />
     <Compile Include="Models\Internet.cs" />
+    <Compile Include="Models\Office.cs" />
     <Compile Include="Models\Package.cs" />
     <Compile Include="Models\Plan.cs" />
     <Compile Include="Models\Telecable.cs" />
@@ -297,6 +303,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203221724339_FixRelationshipsBetweenDetailPlan.resx">
       <DependentUpon>202203221724339_FixRelationshipsBetweenDetailPlan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203271344265_AddOfficeTable.resx">
+      <DependentUpon>202203271344265_AddOfficeTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

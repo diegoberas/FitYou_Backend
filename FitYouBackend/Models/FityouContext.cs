@@ -24,6 +24,7 @@ namespace FitYouBackend.Models
         public DbSet<Telecable> Telecables { get; set; }
         public DbSet<TelecablePackage> TelecablePackages { get; set; }
         public DbSet<Telephone> Telephones { get; set; }
+        public DbSet<Office> Offices { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -38,6 +39,7 @@ namespace FitYouBackend.Models
             modelBuilder.Configurations.Add(new TelecableConfiguration());
             modelBuilder.Configurations.Add(new TelecablePackageConfiguration());
             modelBuilder.Configurations.Add(new TelephoneConfiguration());
+            modelBuilder.Configurations.Add(new OfficeConfiguration());
 
         }
 

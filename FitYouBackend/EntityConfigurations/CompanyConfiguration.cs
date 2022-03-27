@@ -27,6 +27,10 @@ namespace FitYouBackend.EntityConfigurations
                 .HasForeignKey(p => p.CompanyId)
                 .WillCascadeOnDelete(false);
 
+            HasMany(c => c.Offices)
+                .WithRequired(o => o.Company)
+                .HasForeignKey(o => o.CompanyId)
+                .WillCascadeOnDelete(false);
 
         }
     }

@@ -10,7 +10,8 @@ namespace FitYouBackend.Models
         public Company()
         {
             Plans = new HashSet<Plan>();
-            CompanyDetails = new HashSet<CompanyDetail>();          
+            CompanyDetails = new HashSet<CompanyDetail>(); 
+            Offices = new HashSet<Office>();
         }
 
         public int Id { get; set; }
@@ -19,6 +20,8 @@ namespace FitYouBackend.Models
         public virtual ICollection<Plan> Plans { get; set; }
 
         public virtual ICollection<CompanyDetail> CompanyDetails { get; set; }
+
+        public virtual ICollection<Office> Offices { get; set; }
 
     }
 }
