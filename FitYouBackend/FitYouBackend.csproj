@@ -167,6 +167,7 @@
     <Compile Include="Controllers\DetailPlanController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InternetController.cs" />
+    <Compile Include="Controllers\OfficeController.cs" />
     <Compile Include="Controllers\PackageController.cs" />
     <Compile Include="Controllers\PlanController.cs" />
     <Compile Include="Controllers\TelecableController.cs" />
